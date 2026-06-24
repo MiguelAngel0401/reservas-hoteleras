@@ -11,37 +11,26 @@ spring:
           jwk-set-uri: http://localhost:9000/oauth2/jwks
   cloud:
     gateway:
-      server:
-        webmvc:
-          routes:
-            # Authorization Server
-            - id: auth
-              uri: http://localhost:9000
-              predicates:
-                - Path=/api/auth/**
-            
-            # Habitaciones
-            - id: mcv-habitaciones
-              uri: lb://mcv-habitaciones
-              predicates:
-                - Path=/api/habitaciones/**
-            
-            # Reservas
-            - id: mcv-reservas
-              uri: lb://mcv-reservas
-              predicates:
-                - Path=/api/reservas/**
-            
-            # Huespedes
-            - id: huespedes
-              uri: lb://huespedes
-              predicates:
-                - Path=/api/huespedes/**
-              filters:
-                - StripPrefix=2
+      routes:
+        - id: auth
+          uri: http://localhost:9000
+          predicates:
+            - Path=/api/auth/**
 
-    loadbalancer:
-      enabled: true
+        - id: mcv-habitaciones
+          uri: lb://mcv-habitaciones
+          predicates:
+            - Path=/api/habitaciones/**
+
+        - id: mcv-reservas
+          uri: lb://mcv-reservas
+          predicates:
+            - Path=/api/reservas/**
+
+        - id: huespedes
+          uri: lb://huespedes
+          predicates:
+            - Path=/api/huespedes/**
 
 eureka:
   client:
