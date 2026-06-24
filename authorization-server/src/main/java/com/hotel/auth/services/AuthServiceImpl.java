@@ -52,10 +52,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public TokenResponse autenticar(LoginRequest request) throws Exception {
         log.info("Cargando usuario {}", request.username());
+        
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.username());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        if (userDetails == null || !new BCryptPasswordEncoder().matches(
-                request.password(), userDetails.getPassword()) ) {
+        if (userDetails == null || !encoder.matches(request.password(), userDetails.getPassword()) ) {
             throw new IllegalArgumentException("Credenciales inválidas");
         }
 

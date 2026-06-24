@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.hotel.auth.dto.CustomErrorResponse;
 
 import java.util.NoSuchElementException;
@@ -16,6 +17,14 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 @Slf4j
 public class GlobalHandlerException {
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<CustomErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException e) {
+        log.error("Usuario no encontrado: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new CustomErrorResponse(HttpStatus.BAD_REQUEST.value(), "Credenciales inválidas")
+        );
+    }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<CustomErrorResponse> handleConstraintViolationException(ConstraintViolationException e) {
