@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: gateway
-  # Anade un servidor de recursos que utiliza tokens JWT para autenticar y autorizar el acceso a
-  # rutas protegidas. El servidor de recursos obtiene las claves públicas necesarias para verificar
-  # los tokens JWT de un conjunto de claves JSON Web (JWK Set) ubicado en http://localhost:9000/oauth2/jwks.
   security:
     oauth2:
       resourceserver:
@@ -15,8 +12,27 @@ spring:
   cloud:
     gateway:
       server:
-        webflux:
+        webmvc:
           routes:
+            # Authorization Server
+            - id: auth
+              uri: http://localhost:9000
+              predicates:
+                - Path=/api/auth/**
+            
+            # Habitaciones
+            - id: mcv-habitaciones
+              uri: lb://mcv-habitaciones
+              predicates:
+                - Path=/api/habitaciones/**
+            
+            # Reservas
+            - id: mcv-reservas
+              uri: lb://mcv-reservas
+              predicates:
+                - Path=/api/reservas/**
+            
+            # Huespedes
             - id: huespedes
               uri: lb://huespedes
               predicates:
