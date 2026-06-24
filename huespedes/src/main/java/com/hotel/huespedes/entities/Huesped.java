@@ -11,17 +11,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @Table(name = "HUESPEDES")
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Builder
 public class Huesped {
@@ -29,7 +28,7 @@ public class Huesped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_HUESPED")
-    private Long idHuesped;
+    private Long id;
 
     @Column(name = "NOMBRE", length = 50, nullable = false)
     private String nombre;
@@ -58,7 +57,7 @@ public class Huesped {
         String apellidoLimpio = apellido != null ? apellido.trim() : null;
         String emailLimpio = email != null ? email.trim() : null;
         String telefonoLimpio = telefono != null ? telefono.trim() : null;
-        String documentoLimpio = documento != null ? documento.trim() : null;
+        String documentoLimpio = documento != null ? documento.trim().toUpperCase() : null;
         String nacionalidadLimpio = nacionalidad != null ? nacionalidad.trim() : null;
 
         validarDatos(nombreLimpio, apellidoLimpio, emailLimpio, telefonoLimpio, documentoLimpio, nacionalidadLimpio);
@@ -80,7 +79,7 @@ public class Huesped {
         String apellidoLimpio = apellido != null ? apellido.trim() : null;
         String emailLimpio = email != null ? email.trim() : null;
         String telefonoLimpio = telefono != null ? telefono.trim() : null;
-        String documentoLimpio = documento != null ? documento.trim() : null;
+        String documentoLimpio = documento != null ? documento.trim().toUpperCase() : null;
         String nacionalidadLimpio = nacionalidad != null ? nacionalidad.trim() : null;
 
         validarDatos(nombreLimpio, apellidoLimpio, emailLimpio, telefonoLimpio, documentoLimpio, nacionalidadLimpio);
@@ -99,8 +98,8 @@ public class Huesped {
     }
 
     private static void validarDatos(String nombre, String apellido, String email, String telefono, String documento, String nacionalidad) {
-        StringCustomUtils.validarTamanio(nombre, 3, 50, "El nombre debe tener entre 3 y 50 caracteres");
-        StringCustomUtils.validarTamanio(apellido, 3, 50, "El apellido debe tener entre 3 y 50 caracteres");
+        StringCustomUtils.validarTamanio(nombre, 2, 50, "El nombre debe tener entre 3 y 50 caracteres");
+        StringCustomUtils.validarTamanio(apellido, 2, 50, "El apellido debe tener entre 3 y 50 caracteres");
         StringCustomUtils.validarTamanio(email, 10, 100, "El email debe tener entre 10 y 100 caracteres");
         StringCustomUtils.validarTamanio(telefono, 10, 10, "El telefono debe tener 10 caracteres");
         StringCustomUtils.validarTamanio(documento, 7, 20, "El documento debe tener entre 7 y 20 caracteres");

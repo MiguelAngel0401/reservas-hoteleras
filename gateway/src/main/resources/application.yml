@@ -17,10 +17,10 @@ spring:
       server:
         webflux:
           routes:
-            - id: msv-medicos
-              uri: lb://msv-medicos
+            - id: huespedes
+              uri: lb://huespedes
               predicates:
-                - Path=/api/medicos/**
+                - Path=/api/huespedes/**
               filters:
                 - StripPrefix=2
 
