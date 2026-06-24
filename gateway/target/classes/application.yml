@@ -15,7 +15,7 @@ spring:
         webmvc:
           routes:
             # Authorization Server
-            - id: auth
+            - id: authorization-server
               uri: http://localhost:9000
               predicates:
                 - Path=/api/auth/**
@@ -26,23 +26,22 @@ spring:
               predicates:
                 - Path=/api/habitaciones/**
             
-            # Huéspedes
-            - id: mcv-huespedes
-              uri: lb://mcv-huespedes
-              predicates:
-                - Path=/api/huespedes/**
-            
             # Reservas
             - id: mcv-reservas
               uri: lb://mcv-reservas
               predicates:
                 - Path=/api/reservas/**
             
-            # Usuarios
-            - id: mcv-usuarios
-              uri: lb://mcv-usuarios
+            # Huespedes
+            - id: huespedes
+              uri: lb://huespedes
               predicates:
-                - Path=/api/usuarios/**
+                - Path=/api/huespedes/**
+              filters:
+                - StripPrefix=2
+
+    loadbalancer:
+      enabled: true
 
 eureka:
   client:

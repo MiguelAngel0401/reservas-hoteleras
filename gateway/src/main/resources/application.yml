@@ -15,7 +15,7 @@ spring:
         webmvc:
           routes:
             # Authorization Server
-            - id: auth
+            - id: authorization-server
               uri: http://localhost:9000
               predicates:
                 - Path=/api/auth/**
