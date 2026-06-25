@@ -6,5 +6,6 @@ import com.hotel.habitaciones.dto.HabitacionResponse;
 
 public interface HabitacionService extends CrudService<HabitacionRequest, HabitacionResponse> {
     HabitacionResponse cambiarEstado(Long id, Integer idEstado);
+    HabitacionResponse actualizarEstadoInterno(Long id, Integer idEstado);
     HabitacionResponse obtenerHabitacionPorId(Long id);
 }

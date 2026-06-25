@@ -102,29 +102,29 @@ public class HuespedServiceImpl implements HuespedService {
     private void validarDatosUnicos(String email, String telefono, String documento) {
        log.info("Validando email unico");
        if (huespedRepository.existsByEmailIgnoreCaseAndEstadoRegistro(email.trim(), EstadoRegistro.ACTIVO)) {
-        throw new IllegalArgumentException("Ya existe un huesped activo con el email: " + email);
+        throw new IllegalStateException("Ya existe un huesped activo con el email: " + email);
        }
 
        log.info("Validando telefono unico");
        if (huespedRepository.existsByTelefonoAndEstadoRegistro(telefono.trim(), EstadoRegistro.ACTIVO)) {
-        throw new IllegalArgumentException("Ya existe un huesped activo con el telefono: " + telefono);
+        throw new IllegalStateException("Ya existe un huesped activo con el telefono: " + telefono);
        }
 
        log.info("Validando documento unico");
        if (huespedRepository.existsByDocumentoIgnoreCaseAndEstadoRegistro(documento.trim(), EstadoRegistro.ACTIVO)) {
-        throw new IllegalArgumentException("Ya existe un huesped activo con el documento: " + documento);
+        throw new IllegalStateException("Ya existe un huesped activo con el documento: " + documento);
        }
     }
 
     private void validarCambiosEnDatosUnicos(Long id, String email, String telefono, String documento) {
         if (huespedRepository.existsByEmailIgnoreCaseAndEstadoRegistroAndIdNot(email.trim(), EstadoRegistro.ACTIVO, id)) {
-            throw new IllegalArgumentException("Ya existe otro huesped con el mismo email");
+            throw new IllegalStateException("Ya existe otro huesped con el mismo email");
         }
         if (huespedRepository.existsByTelefonoAndEstadoRegistroAndIdNot(telefono.trim(), EstadoRegistro.ACTIVO, id)) {
-            throw new IllegalArgumentException("Ya existe otro huesped con el mismo telefono");
+            throw new IllegalStateException("Ya existe otro huesped con el mismo telefono");
         }
         if (huespedRepository.existsByDocumentoIgnoreCaseAndEstadoRegistroAndIdNot(documento.trim(), EstadoRegistro.ACTIVO, id)) {
-            throw new IllegalArgumentException("Ya existe otro huesped con el mismo documento");
+            throw new IllegalStateException("Ya existe otro huesped con el mismo documento");
         }
     }
 }

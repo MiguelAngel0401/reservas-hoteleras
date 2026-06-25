@@ -43,7 +43,11 @@ public class HabitacionServiceImpl implements HabitacionService {
     @Override
     @Transactional(readOnly = true)
     public HabitacionResponse obtenerHabitacionPorId(Long id) {
-        return obtenerPorId(id);
+        return habitacionMapper.entidadAResponse(
+            habitacionRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                    "Habitación no encontrada con id: " + id))
+        );
     }
 
     @Override
@@ -90,5 +94,15 @@ public class HabitacionServiceImpl implements HabitacionService {
     private Habitacion obtenerEntidadActiva(Long id) {
         return habitacionRepository.findByIdAndEstadoRegistro(id, EstadoRegistro.ACTIVO)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Habitación no encontrada con id: " + id));
+    }
+    
+    @Override
+    public HabitacionResponse actualizarEstadoInterno(Long id, Integer idEstado) {
+        log.info("Cambio de estado interno habitación id {} a estado {}", id, idEstado);
+        Habitacion habitacion = obtenerEntidadActiva(id);
+        EstadoHabitacion nuevoEstado = EstadoHabitacion.obtenerPorCodigo(idEstado.longValue());
+        
+        habitacion.cambiarEstado(nuevoEstado);
+        return habitacionMapper.entidadAResponse(habitacionRepository.save(habitacion));
     }
 }
