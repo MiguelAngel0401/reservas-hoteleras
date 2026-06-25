@@ -26,4 +26,9 @@ public class ReservaController extends CommonController<ReservaRequest, ReservaR
         log.info("Cambiando estado de la reserva {} al estado {}", idReserva, idEstado);
         return ResponseEntity.ok(service.cambiarEstado(idReserva, idEstado));
     }
+    
+    @GetMapping("/huesped/{idHuesped}/en-curso")
+    public ResponseEntity<Boolean> tieneReservaEnCurso(@PathVariable Long idHuesped) {
+        return ResponseEntity.ok(service.tieneReservaEnCurso(idHuesped));
+    }
 }

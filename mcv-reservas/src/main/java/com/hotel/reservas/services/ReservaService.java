@@ -8,4 +8,5 @@ import com.hotel.reservas.dto.ReservaResponse;
 
 public interface ReservaService extends CrudService<ReservaRequest, ReservaResponse> {
     ReservaResponse cambiarEstado(Long idReserva, Integer idEstado);
+    boolean tieneReservaEnCurso(Long idHuesped);
 }

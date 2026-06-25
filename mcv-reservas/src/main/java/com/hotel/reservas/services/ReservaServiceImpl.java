@@ -12,6 +12,7 @@ import com.hotel.commons.dto.HabitacionResponse;
 import com.hotel.commons.dto.HuespedResponse;
 import com.hotel.commons.enums.EstadoHabitacion;
 import com.hotel.commons.enums.EstadoRegistro;
+import com.hotel.commons.enums.EstadoReserva;
 import com.hotel.commons.exceptions.RecursoNoEncontradoException;
 import com.hotel.reservas.dto.ReservaRequest;
 import com.hotel.reservas.dto.ReservaResponse;
@@ -153,5 +154,12 @@ public class ReservaServiceImpl implements ReservaService {
         return reservaRepository.findByIdAndEstadoRegistro(id, EstadoRegistro.ACTIVO)
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró la reserva con id: " + id));
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public boolean tieneReservaEnCurso(Long idHuesped) {
+        return reservaRepository.existsByIdHuespedAndEstadoReserva(
+            idHuesped, EstadoReserva.EN_CURSO);
     }
 }

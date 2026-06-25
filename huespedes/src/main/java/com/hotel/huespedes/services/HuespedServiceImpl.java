@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.hotel.commons.clients.ReservaClient;
 import com.hotel.commons.dto.HuespedRequest;
 import com.hotel.commons.dto.HuespedResponse;
 import com.hotel.commons.enums.EstadoRegistro;
@@ -77,12 +78,17 @@ public class HuespedServiceImpl implements HuespedService {
         return huespedMapper.entidadAResponse(huespedActualizado);
     }
 
+    private final ReservaClient reservaClient;
+
     @Override
     public void eliminar(Long id) {
         log.info("Eliminando huesped con id: {}", id);
         Huesped huesped = obtenerHuespedActivoPorId(id);
+        if (Boolean.TRUE.equals(reservaClient.tieneReservaEnCurso(id)))
+            throw new IllegalStateException(
+                "No se puede eliminar un huésped con reservas EN_CURSO");
         huesped.eliminar();
-        log.info("Paciente con id {} eliminado exitosamente", id);
+        huespedRepository.save(huesped);
     }
 
     private Huesped obtenerHuespedActivoPorId(Long id) {
