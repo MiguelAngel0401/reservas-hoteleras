@@ -32,4 +32,9 @@ public class HabitacionController extends CommonController<HabitacionRequest, Ha
             @PathVariable @Positive(message = "El ID debe ser positivo") Long id) {
         return ResponseEntity.ok(service.obtenerHabitacionPorId(id));
     }
+    
+    @PutMapping("/{id}/estado-interno/{idEstado}")
+    public ResponseEntity<HabitacionResponse> actualizarEstadoInterno(@PathVariable Long id, @PathVariable Integer idEstado) {
+        return ResponseEntity.ok(service.actualizarEstadoInterno(id, idEstado));
+    }
 }
