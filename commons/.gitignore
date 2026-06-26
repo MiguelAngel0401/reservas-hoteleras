@@ -1,33 +1,85 @@
-HELP.md
+# ============================
+# Java / Spring Boot
+# ============================
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+build/
+*.jar
+*.war
+*.ear
+*.class
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+
+# ============================
+# IDEs
+# ============================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
 .project
-.settings
+.classpath
+.settings/
+.apt_generated
+.factorypath
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# ============================
+# Configuración local / Secretos
+# ============================
+application-local.yml
+application-local.properties
+application-dev.yml
+application-prod.yml
+*.env
+.env.*
+secrets.properties
+credentials.json
+*.pem
+*.key
+*.crt
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# ============================
+# Logs / Temp
+# ============================
+logs/
+*.log
+*.tmp
+*.temp
+*.pid
+*.seed
+hs_err_pid*
 
-### VS Code ###
-.vscode/
+# ============================
+# Tests / Cobertura
+# ============================
+coverage/
+.coverage/
+test-output/
+surefire-reports/
+failsafe-reports/
+jacoco.exec
+
+# ============================
+# OS
+# ============================
+.DS_Store
+Thumbs.db
