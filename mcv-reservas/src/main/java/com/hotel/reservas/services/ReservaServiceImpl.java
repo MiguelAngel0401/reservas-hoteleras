@@ -126,7 +126,6 @@ public class ReservaServiceImpl implements ReservaService {
         switch (idEstado) {
             case 2 -> {
                 reserva.checkin();
-                habitacionClient.actualizarEstadoInterno(reserva.getIdHabitacion(), 2);
             }
             case 3 -> {
                 reserva.checkout();
