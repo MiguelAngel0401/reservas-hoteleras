@@ -61,6 +61,31 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public UsuarioResponse actualizar(String username, UsuarioRequest request) {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new NoSuchElementException("No se encontró el usuario: " + username));
+
+        // Si cambia el username, validar que no esté duplicado
+        if (!usuario.getUsername().equals(request.username()) && 
+            usuarioRepository.findByUsername(request.username()).isPresent()) {
+            throw new IllegalArgumentException("El username " + request.username() + " ya está en uso");
+        }
+
+        Set<Rol> roles = request.roles().stream().map(rol ->
+                rolRepository.findByNombre(rol).orElseThrow(() ->
+                        new NoSuchElementException("Rol " + rol + " no encontrado"))
+        ).collect(Collectors.toSet());
+
+        usuario.setUsername(request.username());
+        usuario.setPassword(passwordEncoder.encode(request.password()));
+        usuario.setRoles(roles);
+
+        usuario = usuarioRepository.save(usuario);
+        return usuarioMapper.entityToResponse(usuario);
+    }
+
+
+    @Override
     public UsuarioResponse eliminar(String username) {
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new NoSuchElementException("No se encontró el usuario: " + username));
